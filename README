@@ -1,0 +1,232 @@
+#URL: http://transport.opendata.ch/v1/connections?from=Rome&to=Gen%C3%A8ve
+
+Parse the list of cities from Fred Schulltze
+
+shuf oebb_stations_2.sql > oebb_stations_shuf.sql
+python scripts/parse_oebb_stations.py oebb_stations_shuf.sql > oebb_ch_stations_shuf.csv
+cat oebb_ch_stations_shuf.csv | awk -F '\t' '{print $2 "\t" $3 "\t" $4 "\t" $5;}' | sort | uniq | shuf > ch_stations_shuffled.tsv
+
+*************
+
+`ch_stations_all.csv` contains a list of (id, station_name, lat, lon)
+
+7872705 Brodski Stupnik 45.160682       17.795189
+7872706 Oriovac 45.15918        17.756221
+7872707 Luzani-Malino   45.170408       17.716785
+
+This file contains 71882 entries. We need to get the connections from Vienna
+to each of these cities. Vienna's id is 8101003.
+
+*************
+
+Get the connections for each city in ch_stations_shuffled.tsv
+
+mkdir -p all_all_times/all_times_vienna
+cat ch_stations_shuffled.tsv | awk '{print "vienna",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_vienna 2> times_err.csv
+
+Paris (Gare du Nord): 8711300 
+
+mkdir -p all_all_times/all_times_paris
+cat ch_stations_shuffled.tsv | awk '{print "paris",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_paris 2> times_err.csv
+
+London (7015400)
+
+mkdir -p all_all_times/all_times_london
+cat ch_stations_shuffled.tsv | awk '{print "london",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_london 2> times_err.csv
+
+Berlin (8031922)
+
+mkdir -p all_all_times/all_times_berlin
+cat ch_stations_shuffled.tsv | awk '{print "berlin",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_berlin 2> times_err_berlin.csv
+
+Frankfurt
+
+mkdir -p all_all_times/all_times_frankfurt
+cat ch_stations_shuffled.tsv | awk '{print "frankfurt",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_frankfurt 2> times_err_frankfurt.csv
+
+Madrid (007117000)
+
+city=madrid; id=007117000; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "madrid",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Rome (008308409)
+
+city=rome; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "rome",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Geneva (008501008)
+
+city=geneva; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "geneva",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Brussels (008814001)
+
+city=brussels; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "brussels",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Amsterdam (008400058)
+
+city=amsterdam; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "amsterdam",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Copenhagen (008600626)
+
+city=copenhagen; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "copenhagen",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Oslo (007600100)
+
+city=oslo; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "oslo",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Stockholm (007403751)
+
+city=stockholm; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "stockholm",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Helsinki (001000001)
+
+city=helsinki; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "helsinki",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Tallinn 
+
+city=tallinn; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "tallinn",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Riga
+
+city=riga; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "riga",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Vilnius
+
+city=vilnius; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "vilnius",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Minsk
+
+city=minsk; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "Minsk+%28BY%29&",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Kyiv
+
+???
+
+Chisinau
+
+???
+
+Bucharest
+
+Sofia
+
+city=sofia; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "sofia",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Athens
+
+Belgrade
+
+city=belgrade; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "belgrade",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Zagreb
+
+city=zagreb; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "zagreb",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Montenegro
+
+city=podgorica; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "podgorica",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Ljubljana
+
+city=ljubljana; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "ljubljana",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Bratislava
+
+city=bratislava; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "bratislava",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Warsaw
+
+city=warsaw; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "warsaw",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Budapest
+
+city=budapest; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "budapest",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Prague
+
+city=prague; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "prague",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Dublin
+
+city=dublin; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "dublin",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Lisbon
+
+city=lisbon; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "lisbon",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Barcelona
+
+city=barcelona; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "barcelona",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Jena
+
+city=jena; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "jena",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+http://transport.opendata.ch/v1/connections?from=athens&to=Gen%C3%A8ve
+
+*************
+
+parallel 'find all_all_times/all_times_{}/ -type f  > file_lists/file_list_{}.txt; python scripts/parse_connections.py -l file_lists/file_list_{}.txt > all_connections/all_connections_{}.json' ::: london paris berlin madrid frankfurt copenhagen
+
+method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 46.3 --min-y 33.1 --max-y 74.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: helsinki
+
+method=time; walkspeed=15; resolution=4000; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
+
+for city in vienna jena london berlin paris; do /usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r 10 --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 > grid_${city}.json; done;
+
+#method=time; walkspeed=15; resolution=4000; parallel "/usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} > grids/grid_${method}_${city}_${resolution}_${walkspeed}.json" ::: $(cat cities.txt)
+
+convert grid_vienna.json.png -alpha set -channel RGBA -fill none -opaque white -resize 1000 vienna_none.gif
+
+# where the r parameter indicates the resolution of the grid
+#
+method=time; walkspeed=5; resolution=200; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
+
+************
+
+n=10000; head -n $n all_all_times.bak/all_times_everything_shuf.lst > segments/all_times_everything_${n}.lst; /usr/bin/time pypy scripts/parse_sections.py -p all_all_times.bak/ -l segments/all_times_everything_${n}.lst > segments/segments_${n}.tsv
+
+
+Cities from:
+
+http://www.citymayors.com/features/euro_cities5.html
+
+Get the connection times:
+
+cat major_cities.lst | python scripts/get_times.py
+
+
+Concatenate into one large list while keeping only the relevant information. Also, convert
+the times from 01d01:32:45 format to minutes
+
+find connections/ -name "*.json" | xargs python scripts/parse_connections.py > connection_times.json
+
+Use the workflow described in the "Let's Make a Map" tutorial by Mike Bostock:
+
+http://bost.ocks.org/mike/map/
+
+ogr2ogr   -f GeoJSON   -where "ADM0_A3 IN ('ALB', 'AND', 'ARM', 'AUT', 'BLR', 'BEL', 'BIH', 'BGR', 'HRV', 'CYP', 'CZE', 'DNK', 'EST', 'FIN', 'FRA', 'DEU', 'GIB', 'GRC', 'HUN', 'IRL', 'ITA', 'LVA', 'LIE', 'LTU', 'MLT', 'MDA', 'NLD', 'NOR', 'POL', 'PRT', 'ROU', 'RUS', 'SMR', 'SVN', 'SVK', 'ESP', 'SWE', 'CHE', 'UKR', 'GBR', 'VAT', 'SRB')"   subunits.json   ne_10m_admin_0_map_subunits.shp
