@@ -17,6 +17,8 @@ def main():
     num_args= 1
     parser = OptionParser(usage=usage)
 
+    parser.add_option('-m', '--method', dest='method', default='time', help='which method to calculate the distance using', type='str')
+
     parser.add_option('-r', '--resolution', dest='resolution', default=4, 
             help="The resolution we want the grid to be at", type='int')
     parser.add_option('-o', '--output-file', dest='output_file', default=None,
@@ -31,6 +33,9 @@ def main():
             help='The minimum latitude', type='float')
     parser.add_option('', '--max-y', dest='max_y', default=None,
             help='The maximum latitude', type='float')
+    parser.add_option('', '--walking-speed', dest='walking_speed', default=5,
+            help='The speed with which one transports oneself from a train station \
+                  to somewhere else', type='float')
 
     #parser.add_option('-u', '--useless', dest='uselesss', default=False, action='store_true', help='Another useless option')
 
@@ -41,22 +46,31 @@ def main():
         sys.exit(1)
 
     print >>sys.stderr, "res:", options.resolution
-    (distances, xs, ys, zs) = ptt.get_connection_coordinates_and_times(args[0])
+    (distances, xs, ys, zs, from_x, from_y) = ptt.get_connection_coordinates_and_times(args[0])
 
     
     sys.setrecursionlimit(8500)
 
-    if options.old:
-        (grid_x, grid_y, grid_z, min_x, max_x, min_y, max_y) = ptt.create_grid(distances, xs, ys, zs, complex(0, options.resolution))
+    if options.method == 'time':
+        if options.old:
+            (grid_x, grid_y, grid_z, min_x, max_x, min_y, max_y) = ptt.create_grid(distances, xs, ys, zs, complex(0, options.resolution))
+        else:
+            print >>sys.stderr, "creating time grid"
+            (grid_x, grid_y, grid_z, min_x, max_x, min_y, max_y) = ptt.create_grid2(distances, xs, ys, zs, complex(0, options.resolution), options.min_x, options.max_x, options.min_y, options.max_y, walking_speed = options.walking_speed)
+    elif options.method == 'speed':
+            (grid_x, grid_y, grid_z, min_x, max_x, min_y, max_y) = ptt.create_grid2(distances, xs, ys, zs, complex(0, options.resolution), options.min_x, options.max_x, options.min_y, options.max_y, walking_speed = options.walking_speed)
+
+            grid_z = ptt.calc_speed_grid(grid_x, grid_y, grid_z, from_x, from_y)
     else:
-        (grid_x, grid_y, grid_z, min_x, max_x, min_y, max_y) = ptt.create_grid2(distances, xs, ys, zs, complex(0, options.resolution), options.min_x, options.max_x, options.min_y, options.max_y)
+        print >>sys.stderr, "Invalid method... choose one of 'time' or 'speed'"
+        sys.exit(1)
 
     if options.output_file is None:
-        json.dump({'grid_z':[list(g) for g in grid_z], 'min_x':min_x,
+        json.dump({'grid_z':[list(map(float, map("{:.2f}".format, g))) for g in grid_z], 'min_x':min_x,
                    'max_x': max_x, 'min_y': min_y, 'max_y': max_y}, sys.stdout)
     else:
         with open(options.output_file, 'w') as f:
-            json.dump({'grid_z':[list(g) for g in grid_z], 'min_x': min_x, 
+            json.dump({'grid_z':[list(map("{:.2f}".float, g)) for g in grid_z], 'min_x': min_x, 
                        'max_x': max_x, 'min_y': min_y, 'max_y': max_y}, f)
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import datetime as dt
+import gzip
 import re
 import sys
 import json
@@ -8,10 +9,10 @@ from optparse import OptionParser
 
 def parse_connections(filename):
     duration_parse = re.compile('(?P<days>[\d]{2})d(?P<hours>[\d]{2}):(?P<minutes>[\d]{2}):(?P<seconds>[\d]{2})')
-    with open(filename, 'r') as f:
+    with gzip.open(filename, 'r') as f:
         try:
             data = json.loads(f.read())
-        except ValueError as ve:
+        except Exception as e:
             print >>sys.stderr, "Error decoding JSON", filename
             return []
 

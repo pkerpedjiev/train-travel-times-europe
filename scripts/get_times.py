@@ -3,6 +3,7 @@ import random
 import sys
 import time
 import urllib2
+import gzip
 
 #!/usr/bin/python
 
@@ -29,12 +30,12 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    url = 'http://transport.opendata.ch/v1/connections?from={}&to={}'.format(args[0], args[1])
+    url = 'http://transport.opendata.ch/v1/connections?from={}&to={}&date=2015-06-01&time=08:00'.format(args[0], args[1])
 
     found = False
     to_sleep = 1
     while not found and to_sleep < 2:
-        filename = op.join(options.output_dir, '_'.join(args))
+        filename = op.join(options.output_dir, '_'.join(args) + ".gz")
         if options.check_existing:
             if op.exists(filename):
                 sys.stdout.write("exists... {}\n".format(filename))
@@ -42,7 +43,7 @@ def main():
         try:
             u = urllib2.urlopen(url, timeout=60)
             sys.stdout.write('_'.join(args) + "\n")
-            with open(filename, 'w') as f:
+            with gzip.open(filename, 'w') as f:
                 f.write(u.read())
             sys.stdout.flush()
             found = True

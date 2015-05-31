@@ -53,6 +53,9 @@ Get the connections for each city in ch_stations_shuffled.tsv
     city=helsinki; mkdir all_times_${city}
     cat ch_stations_shuffled.tsv | awk '{print 001000001,$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_times_${city} 2> times_err_${city}.csv
 
+    city=antwerp; mkdir all_times_${city}
+    cat ch_stations_shuffled.tsv | awk '{print 008821006,$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_times_${city} 2> times_err_${city}.csv
+
 
     city=london; find all_times_${city}/ -type f  > file_list_${city}.txt; python scripts/parse_connections.py -l file_list_${city}.txt > all_connections_${city}.json
     for city in vienna jena london berlin paris; do /usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r 10 --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 > grid_${city}.json; done;
