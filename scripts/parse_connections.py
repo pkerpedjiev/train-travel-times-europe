@@ -28,6 +28,9 @@ def parse_connections(filename):
                             "to": connection['to']['station'],
                             "duration" : total_time }]
 
+            if connection['from']['station']['name'].find('Birmingham') >= 0:
+                print >>sys.stderr, "birmingham",  small_data
+
         fastest = sorted(small_data, key=lambda x: x['duration'])
         #print "fastest:", fastest
 
@@ -56,6 +59,8 @@ def main():
 
     data = []
 
+    # add a connection to the origin station
+
     if options.file_list:
         with open(args[0], 'r') as f:
             for line in f:
@@ -63,6 +68,12 @@ def main():
     else:
         for arg in args:
             data += parse_connections(arg)    
+
+    import copy
+
+    data += [copy.deepcopy(data[-1])]
+    data[-1]['to'] = data[-1]['from']
+    data[-1]['duration'] = 0
 
     print >>sys.stderr, "done"
     print json.dumps(data, indent=2)

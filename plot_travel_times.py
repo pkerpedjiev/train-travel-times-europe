@@ -49,6 +49,8 @@ def get_connection_coordinates_and_times(connections_filename):
             from_x = connection['from']['coordinate']['x']
             from_y = connection['from']['coordinate']['y']
 
+            distances[(from_x, from_y)] = 0
+
             z = [connection['duration']]
 
             if y > 90:
@@ -221,11 +223,11 @@ def create_grid2(distances, xs, ys, zs, res, min_x, max_x, min_y, max_y, walking
 
             station_to_target = haversine(target_x, target_y, source_x, source_y)
                 
-            time_needed = speed * station_to_target + curr_distance
-            print >>sys.stderr, "position:", target_x, target_y, "curr_distance:", curr_distance, "grid:", time_needed, log(time_needed), "station_to_target:", station_to_target, "speed:", speed, mx, my
+            #time_needed = 5 * station_to_target + curr_distance
+            #print >>sys.stderr, "position:", target_x, target_y, "curr_distance:", curr_distance, "grid:", time_needed, log(time_needed), "station_to_target:", station_to_target, "speed:", speed, mx, my
 
-            if log(speed * station_to_target + curr_distance) < grid[curr_pos[0]][curr_pos[1]]:
-                grid[curr_pos[0]][curr_pos[1]] =  log(speed * station_to_target + curr_distance)
+            if (speed * station_to_target + curr_distance) < grid[curr_pos[0]][curr_pos[1]]:
+                grid[curr_pos[0]][curr_pos[1]] =  (speed * station_to_target + curr_distance)
                 return True
             else:
                 return False
@@ -272,7 +274,7 @@ def calc_speed_grid(grid_x, grid_y, grid_z, from_x, from_y):
     def calc_speed((x,y,z)):
         new_tt = np.exp(z)
         dist = haversine(from_y, from_x, x, y)
-        print >>sys.stderr, "x,y,z", x,y,z, dist, new_tt, log(dist / new_tt)
+        print >>sys.stderr, "x,y,z", x,y,z, dist, new_tt, (dist / new_tt)
 
         return new_tt / dist
 
@@ -344,7 +346,7 @@ def plot_map_grid(grid_z,min_x,max_x,min_y,max_y, filename=None, showgrid=True, 
     import matplotlib
     matplotlib.rcParams['contour.negative_linestyle'] = 'solid'
     '''
-    levels = [-log(i * 60) for i in range(2, 33, 2)]
+    levels = [-(i * 60) for i in range(2, 33, 2)]
     print >>sys.stderr, "levels:", levels
 
     if contour:

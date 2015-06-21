@@ -186,6 +186,21 @@ Jena
 city=jena; mkdir -p all_all_times/all_times_${city}
 cat ch_stations_shuffled.tsv | awk '{print "jena",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
 
+Zürich
+
+city=zürich; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "zürich",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Antwerp
+
+city=antwerp; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "antwerp",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
+Bucharest
+
+city=bucharest; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "bucuresti",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
 http://transport.opendata.ch/v1/connections?from=athens&to=Gen%C3%A8ve
 
 *************

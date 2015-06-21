@@ -66,11 +66,11 @@ def main():
         sys.exit(1)
 
     if options.output_file is None:
-        json.dump({'grid_z':[list(map(float, map("{:.2f}".format, g))) for g in grid_z], 'min_x':min_x,
+        json.dump({'grid_z':[list(map(int, g)) for g in grid_z], 'min_x':min_x,
                    'max_x': max_x, 'min_y': min_y, 'max_y': max_y}, sys.stdout)
     else:
         with open(options.output_file, 'w') as f:
-            json.dump({'grid_z':[list(map("{:.2f}".float, g)) for g in grid_z], 'min_x': min_x, 
+            json.dump({'grid_z':[list(map(int, g)) for g in grid_z], 'min_x': min_x, 
                        'max_x': max_x, 'min_y': min_y, 'max_y': max_y}, f)
 
 if __name__ == '__main__':

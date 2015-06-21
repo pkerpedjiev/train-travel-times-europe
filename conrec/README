@@ -1,0 +1,1 @@
+resolution=500; parallel node create_path.js ~/projects/oebb/grids/grid_time_{}_${resolution}_5.json 8 '>' contours/{}_contours_${resolution}.json ::: $(cat ~/projects/oebb/cities.txt )
