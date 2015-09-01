@@ -46,8 +46,8 @@ def get_connection_coordinates_and_times(connections_filename):
             x = connection['to']['coordinate']['y']
             y = connection['to']['coordinate']['x']
 
-            from_x = connection['from']['coordinate']['x']
-            from_y = connection['from']['coordinate']['y']
+            from_x = connection['from']['coordinate']['y']
+            from_y = connection['from']['coordinate']['x']
 
             distances[(from_x, from_y)] = 0
 
@@ -219,7 +219,10 @@ def create_grid2(distances, xs, ys, zs, res, min_x, max_x, min_y, max_y, walking
                 is_land[(mx, my)] = my_map.is_land(mx, my)
 
             if not is_land[(mx,my)]:
+                #print >>sys.stderr, target_x, target_y
                 speed = swimming_speed
+                grid[curr_pos[0]][curr_pos[1]] =  max_value
+                return False
 
             station_to_target = haversine(target_x, target_y, source_x, source_y)
                 

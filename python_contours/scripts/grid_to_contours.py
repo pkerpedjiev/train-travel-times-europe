@@ -71,6 +71,12 @@ def main():
     parser.add_option('-i', '--interval', dest='interval', default=2, 
             help="The interval to which the contours correspond (in hours)", 
             type=float)
+    parser.add_option('', '--min-level', dest='min_level', default=0,
+                      help='The first level')
+    parser.add_option('', '--max-level', dest='max_level', default=24,
+                      help='The last level')
+    parser.add_option('', '--num-levels', dest='num_levels', default=13,
+                      help='The number of levels')
     #parser.add_option('-o', '--options', dest='some_option', default='yo', help="Place holder for a real option", type='str')
     #parser.add_option('-u', '--useless', dest='uselesss', default=False, action='store_true', help='Another useless option')
 
@@ -85,7 +91,7 @@ def main():
     else:
         f = open(args[0], 'r')
 
-    levels = [0] + [((i + 0.125) * 60 ) for i in np.linspace(options.interval, 12*options.interval, 12)]
+    levels = [((i + 0.125) * 60 ) for i in np.linspace(options.min_level, options.max_level, options.num_levels)]
 
 
     print >>sys.stderr, "args[0]:", args[0]

@@ -25,14 +25,9 @@ def main():
             help="A file to dump the output to", type='str')
     parser.add_option('-d', '--old', dest='old', action='store_true', default=False,
             help='Use old grid function')
-    parser.add_option('', '--min-x', dest='min_x', default=None,
-            help='The minimum longitude', type='float')
-    parser.add_option('', '--max-x', dest='max_x', default=None,
-            help='The maximum longitude', type='float')
-    parser.add_option('', '--min-y', dest='min_y', default=None,
-            help='The minimum latitude', type='float')
-    parser.add_option('', '--max-y', dest='max_y', default=None,
-            help='The maximum latitude', type='float')
+    parser.add_option('-a', '--haversine', dest='haversine', action='store_true', default=False,
+            help='Use the haversine distance to create the grid')
+
     parser.add_option('', '--walking-speed', dest='walking_speed', default=5,
             help='The speed with which one transports oneself from a train station \
                   to somewhere else', type='float')
@@ -48,6 +43,14 @@ def main():
     print >>sys.stderr, "res:", options.resolution
     (distances, xs, ys, zs, from_x, from_y) = ptt.get_connection_coordinates_and_times(args[0])
 
+    print >>sys.stderr, "xs:", min(xs), max(xs)
+    print >>sys.stderr, "ys:", min(ys), max(ys)
+
+    options.min_x = min(xs)
+    options.min_y = min(ys)
+
+    options.max_x = max(xs)
+    options.max_y = max(ys)
     
     sys.setrecursionlimit(8500)
 

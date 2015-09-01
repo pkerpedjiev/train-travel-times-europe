@@ -30,7 +30,7 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    url = 'http://transport.opendata.ch/v1/connections?from={}&to={}&date=2015-06-01&time=08:00'.format(args[0], args[1])
+    url = 'http://transport.opendata.ch/v1/connections?from={}&to={}&date=2015-08-01&time=08:00'.format(args[0], args[1])
 
     found = False
     to_sleep = 1
