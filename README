@@ -206,25 +206,32 @@ Lannion
 city=lannion; mkdir -p all_all_times/all_times_${city}
 cat ch_stations_shuffled.tsv | awk '{print "lannion",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
 
+Birmingham
+
+city=birmingham; mkdir -p all_all_times/all_times_${city}
+cat ch_stations_shuffled.tsv | awk '{print "birmingham",$1;}' |  xargs -n 2 python scripts/get_times.py -c -o all_all_times/all_times_${city} 2> times_err_${city}.csv
+
 http://transport.opendata.ch/v1/connections?from=athens&to=Gen%C3%A8ve
+
+
 
 *************
 
 parallel 'find all_all_times/all_times_{}/ -type f  > file_lists/file_list_{}.txt; python scripts/parse_connections.py -l file_lists/file_list_{}.txt > all_connections/all_connections_{}.json' ::: london paris berlin madrid frankfurt copenhagen
 
-method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 46.3 --min-y 33.1 --max-y 74.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: helsinki
+method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: helsinki
 
-method=time; walkspeed=15; resolution=4000; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
+#method=time; walkspeed=15; resolution=4000; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
 
-for city in vienna jena london berlin paris; do /usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r 10 --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 > grid_${city}.json; done;
+#for city in vienna jena london berlin paris; do /usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r 10 --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 > grid_${city}.json; done;
 
 #method=time; walkspeed=15; resolution=4000; parallel "/usr/bin/time python scripts/create_grid.py all_connections_${city}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} > grids/grid_${method}_${city}_${resolution}_${walkspeed}.json" ::: $(cat cities.txt)
 
-convert grid_vienna.json.png -alpha set -channel RGBA -fill none -opaque white -resize 1000 vienna_none.gif
+#convert grid_vienna.json.png -alpha set -channel RGBA -fill none -opaque white -resize 1000 vienna_none.gif
 
 # where the r parameter indicates the resolution of the grid
 #
-method=time; walkspeed=5; resolution=200; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
+#method=time; walkspeed=5; resolution=200; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
 
 ************
 

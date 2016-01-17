@@ -158,6 +158,8 @@ def create_grid2(distances, xs, ys, zs, res, min_x, max_x, min_y, max_y, walking
                 resolution='l',area_thresh=1000.,projection='merc',\
                 lat_1=50.,lon_0=-107.)# draw coastlines, country boundaries, fill continents.
 
+    
+    print >>sys.stderr, "distances.keys()", distances.keys()
     is_land = dict()
 
     '''
@@ -178,6 +180,7 @@ def create_grid2(distances, xs, ys, zs, res, min_x, max_x, min_y, max_y, walking
     '''
 
     grid_indeces = dict()
+
 
     for i,(dx, dy) in enumerate(distances.keys()):
         ix = (dx - min_x) / ((max_x - min_x) / float(res.imag - 1))
