@@ -232,6 +232,9 @@ method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/
 # where the r parameter indicates the resolution of the grid
 #
 #method=time; walkspeed=5; resolution=200; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
+#
+cd python_contours
+vi README
 
 ************
 

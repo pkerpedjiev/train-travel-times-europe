@@ -1,2 +1,2 @@
-resolution=10; parallel python scripts/grid_to_contours.py ../grids/grid_time_{}_${resolution}_5.json  '>' contours/{}.json ::: vienna
+resolution=300; parallel python scripts/grid_to_contours.py ../grids/grid_time_{}_${resolution}_5.json  '>' contours/{}.json ::: vienna
 cp contours/*.json ~/projects/emptypipes/jsons/isochrone_contours/
