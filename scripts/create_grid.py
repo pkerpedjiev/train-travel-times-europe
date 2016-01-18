@@ -28,6 +28,16 @@ def main():
     parser.add_option('-a', '--haversine', dest='haversine', action='store_true', default=False,
             help='Use the haversine distance to create the grid')
 
+    parser.add_option('', '--min_x', dest='min_x', help="The minimum x coordinate", 
+                      type='float', default=None)
+    parser.add_option('', '--min_y', dest='min_y', help="The minimum y coordinate", 
+                      type='float', default=None)
+
+    parser.add_option('', '--max', dest='max', help="The max x coordinate", 
+                      type='float', default=None)
+    parser.add_option('', '--max', dest='max', help="The max y coordinate", 
+                      type='float', default=None)
+
     parser.add_option('', '--walking-speed', dest='walking_speed', default=5,
             help='The speed with which one transports oneself from a train station \
                   to somewhere else', type='float')
@@ -46,11 +56,15 @@ def main():
     print >>sys.stderr, "xs:", min(xs), max(xs)
     print >>sys.stderr, "ys:", min(ys), max(ys)
 
-    options.min_x = min(xs)
-    options.min_y = min(ys)
+    if options.min_x is None:
+        options.min_x = min(xs)
+    if options.min_y is None:
+        options.min_y = min(ys)
 
-    options.max_x = max(xs)
-    options.max_y = max(ys)
+    if options.max_x is None:
+        options.max_x = max(xs)
+    if options.max_y is None:
+        options.max_y = max(ys)
     
     sys.setrecursionlimit(8500)
 
