@@ -28,14 +28,14 @@ def main():
     parser.add_option('-a', '--haversine', dest='haversine', action='store_true', default=False,
             help='Use the haversine distance to create the grid')
 
-    parser.add_option('', '--min_x', dest='min_x', help="The minimum x coordinate", 
+    parser.add_option('', '--min-x', dest='min_x', help="The minimum x coordinate", 
                       type='float', default=None)
-    parser.add_option('', '--min_y', dest='min_y', help="The minimum y coordinate", 
+    parser.add_option('', '--min-y', dest='min_y', help="The minimum y coordinate", 
                       type='float', default=None)
 
-    parser.add_option('', '--max', dest='max', help="The max x coordinate", 
+    parser.add_option('', '--max-x', dest='max_x', help="The max x coordinate", 
                       type='float', default=None)
-    parser.add_option('', '--max', dest='max', help="The max y coordinate", 
+    parser.add_option('', '--max-y', dest='max_y', help="The max y coordinate", 
                       type='float', default=None)
 
     parser.add_option('', '--walking-speed', dest='walking_speed', default=5,
