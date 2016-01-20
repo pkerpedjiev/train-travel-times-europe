@@ -33,8 +33,8 @@ def main():
             assert(grid0['min_y'] == grid1['min_y'])
             assert(grid0['max_y'] == grid1['max_y'])
 
-            new_z = np.array(grid0['grid_z']) - np.array(grid1['grid_z'])
-            grid0['grid_z'] = [list(z) for z in new_z]
+            new_z = np.log(np.array(grid0['grid_z'])) - np.log(np.array(grid1['grid_z']))
+            grid0['grid_z'] = [map(int, [10*x for x in list(z)]) for z in new_z]
             
             print json.dumps(grid0)
 

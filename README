@@ -238,6 +238,12 @@ vi README
 
 ************
 
+### Contour Comparison
+
+parallel python python_contours/scripts/grid_diff.py grids/grid_time_{1}_300_5.json grids/grid_time_{2}_300_5.json '>' grid_diffs/grid_diff_{1}_{2}.json ::: birmingham ::: london
+parallel python python_contours/scripts/grid_to_contours.py --min-level -12 --max-level 12 grid_diffs/grid_diff_{1}_{2}.json '>' python_contours/diff_contours/{1}_{2}.json ::: birmingham ::: london
+
+
 n=10000; head -n $n all_all_times.bak/all_times_everything_shuf.lst > segments/all_times_everything_${n}.lst; /usr/bin/time pypy scripts/parse_sections.py -p all_all_times.bak/ -l segments/all_times_everything_${n}.lst > segments/segments_${n}.tsv
 
 

@@ -72,11 +72,11 @@ def main():
             help="The interval to which the contours correspond (in hours)", 
             type=float)
     parser.add_option('', '--min-level', dest='min_level', default=0,
-                      help='The first level')
+                      help='The first level', type=float)
     parser.add_option('', '--max-level', dest='max_level', default=24,
-                      help='The last level')
+                      help='The last level', type=float)
     parser.add_option('', '--num-levels', dest='num_levels', default=13,
-                      help='The number of levels')
+                      help='The number of levels', type=float)
     #parser.add_option('-o', '--options', dest='some_option', default='yo', help="Place holder for a real option", type='str')
     #parser.add_option('-u', '--useless', dest='uselesss', default=False, action='store_true', help='Another useless option')
 
