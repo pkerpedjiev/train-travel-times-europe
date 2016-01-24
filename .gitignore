@@ -2,4 +2,5 @@
 **/*.swp
 **/*.pyc
 **/*.un~
+**/.DS_Store
 all_all_times/**
