@@ -91,10 +91,14 @@ def main():
     else:
         f = open(args[0], 'r')
 
+    # The "+ 0.125" is to make sure that the isochrones are drawn for times slightly
+    # greater than they actually denote. This makes the display more visually pleasing
+    # and helps to overcome some of the error introduced by the finite grid size
     levels = [((i + 0.125) * 60 ) for i in np.linspace(options.min_level, options.max_level, options.num_levels)]
 
-
     print >>sys.stderr, "args[0]:", args[0]
+    print >>sys.stderr, "levels:", levels
+
     grid_json = json.load(f)
     contours = grid_to_contours(grid_json,levels)
     print json.dumps(contours, separators=(',', ':'))

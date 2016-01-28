@@ -82,6 +82,8 @@ def main():
         print >>sys.stderr, "Invalid method... choose one of 'time' or 'speed'"
         sys.exit(1)
 
+    print >> sys.stderr, "grid_z:", grid_z
+
     if options.output_file is None:
         json.dump({'grid_z':[list(map(int, g)) for g in grid_z], 'min_x':min_x,
                    'max_x': max_x, 'min_y': min_y, 'max_y': max_y}, sys.stdout)
