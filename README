@@ -240,10 +240,12 @@ vi README
 
 ### Contour Comparison
 
-parallel python python_contours/scripts/grid_diff.py grids/grid_time_{1}_300_5.json grids/grid_time_{2}_300_5.json '>' grid_diffs/grid_diff_{1}_{2}.json ::: birmingham ::: london
-parallel python python_contours/scripts/grid_to_contours.py --min-level -4 --max-level 4 grid_diffs/grid_diff_{1}_{2}.json '>' python_contours/diff_contours/{1}_{2}.json ::: birmingham ::: london
+city1=birmingham
+city2=london
+parallel python python_contours/scripts/grid_diff.py grids/grid_time_{1}_300_5.json grids/grid_time_{2}_300_5.json '>' grid_diffs/grid_diff_{1}_{2}.json ::: ${city1} ::: ${city2}
+parallel python python_contours/scripts/grid_to_contours.py --min-level -4 --max-level 4 grid_diffs/grid_diff_{1}_{2}.json '>' python_contours/diff_contours/{1}_{2}.json ::: ${city1} ::: ${city2}
 
-cp python_contours/diff_contours/birmingham_london.json ~/projects/minisites/2016-01-24-isochrone-diff/jsons/isochrone-diffs/
+cp python_contours/diff_contours/${city1}_${city2}.json ~/projects/minisites/2016-01-24-isochrone-diff/jsons/isochrone-diffs/
 
 
 ############

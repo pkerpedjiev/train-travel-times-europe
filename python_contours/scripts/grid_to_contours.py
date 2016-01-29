@@ -94,7 +94,9 @@ def main():
     # The "+ 0.125" is to make sure that the isochrones are drawn for times slightly
     # greater than they actually denote. This makes the display more visually pleasing
     # and helps to overcome some of the error introduced by the finite grid size
-    levels = [((i + 0.125) * 60 ) for i in np.linspace(options.min_level, options.max_level, options.num_levels)]
+    #levels = [((i + 0.125) * 60 ) for i in np.linspace(options.min_level, options.max_level, options.num_levels)]
+
+    levels = [-232.5, -192.5, -152.50000000000003, -112.5, -72.500000000000014, -32.500000000000014, 7.5, 47.499999999999964, 87.499999999999986, 127.5, 167.49999999999997, 207.49999999999997, 247.5]
 
     print >>sys.stderr, "args[0]:", args[0]
     print >>sys.stderr, "levels:", levels
