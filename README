@@ -219,7 +219,7 @@ http://transport.opendata.ch/v1/connections?from=athens&to=Gen%C3%A8ve
 
 parallel 'find all_all_times/all_times_{}/ -type f  > file_lists/file_list_{}.txt; python scripts/parse_connections.py -l file_lists/file_list_{}.txt > all_connections/all_connections_{}.json' ::: london paris berlin madrid frankfurt copenhagen
 
-method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json --min-x -12.4 --max-x 46.3 --min-y 33.1 --max-y 74.5 -r ${resolution} --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: birmingham
+method=time; walkspeed=5; resolution=300; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json --min-x -12.4 --max-x 46.3 --min-y 33.1 --max-y 74.5 -r ${resolution} --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: birmingham london
 
 #method=time; walkspeed=15; resolution=4000; parallel /usr/bin/time python scripts/create_grid.py all_connections/all_connections_{}.json -r ${resolution} --min-x -12.4 --max-x 36.3 --min-y 33.1 --max-y 64.5 --method ${method} --walking-speed ${walkspeed} {} '>' grids/grid_${method}_{}_${resolution}_${walkspeed}.json ::: $(cat cities.txt)
 
