@@ -45,7 +45,7 @@ def main():
             print >>sys.stderr, "faraway:", faraway
 
             new_z = abs(np.array(grid0['grid_z']) - np.array(grid1['grid_z']))
-            #new_z[faraway] = 1000000
+            new_z[faraway] = 1000000
             grid0['grid_z'] = [map(int, [x for x in list(z)]) for z in new_z]
             
             print json.dumps(grid0, indent=2)
