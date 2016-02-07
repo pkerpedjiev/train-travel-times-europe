@@ -167,7 +167,7 @@ def create_grid2(distances, xs, ys, zs, res, min_x, max_x, min_y, max_y, walking
     min_y, max_y = min(ys)-3, max(ys)
     '''
     max_z = log(max(zs))
-    max_value = 1080000000
+    max_value = 10800
 
     grid_x, grid_y = np.mgrid[min_x:max_x:res, min_y:max_y:res]
     grid_z = np.zeros(grid_x.shape)
